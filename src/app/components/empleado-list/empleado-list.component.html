@@ -1,20 +1,8 @@
 <div class="container mt-3">
-    <div class="card">
-        <div class="card-body">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="sexo" id="todos" value="Todos">
-                <label class="form-check-label" for="todos">Todos(5)</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="sexo" id="femenino" value="Femenino">
-                <label class="form-check-label" for="femenino">Femenino(3)</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="sexo" id="masculino" value="Masculino">
-                <label class="form-check-label" for="masculino">Masculino(2)</label>
-              </div>
-        </div>
-    </div>
+  <app-count-empleados [todos]="obtenerTotalEmpleados()"
+                       [masculino]="obtenerTotalMasculinos()"
+                       [femenino]="obtenerTotalFemeninos()"
+                       (countRadioButtonChange)="empleadoCountRadioButtonChange($event)"></app-count-empleados>
     <div class="card mt-3">
         <div class="card-body">
             <table class="table">
@@ -28,13 +16,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Juan</td>
-                    <td>Perez</td>
-                    <td>Masculino</td>
-                    <td>2500</td>
-                  </tr>
+                  <ng-container *ngFor="let emp of listEmpleado">
+                    <tr *ngIf="radioButtonSeleccionado == 'Todos' ||  radioButtonSeleccionado == emp.sexo">
+                      <td>{{emp.archivo}}</td>
+                      <td>{{emp.nombre}}</td>
+                      <td>{{emp.apellido}}</td>
+                      <td>{{emp.sexo}}</td>
+                      <td>{{emp.salario | currency}}</td>
+                    </tr>
+                  </ng-container>
+
                 </tbody>
               </table>
         </div>
